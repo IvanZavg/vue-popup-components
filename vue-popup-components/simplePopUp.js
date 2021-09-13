@@ -79,10 +79,12 @@ const simplePopUp = {
   methods: {
     closePopUp() {
       this.show = false
+      this.$emit('closepopup')
     },
     closeOnClickBg() {
       if (this.config.closeOnClickBg) {
         this.show = false
+        this.$emit('closepopup')
       }
     },
   },

@@ -6,12 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    <script src="vue-popups-components/simplePopUp.js"></script>
+    <script src="vue-popup-components/simplePopUp.js"></script>
   </head>
   <body>
     s
     <div id="app">
-      <simple-pop-up :config="popupConfig" :showpopup="showpopup" :key="showpopup"></simple-pop-up>
+      <simple-pop-up
+        :config="popupConfig"
+        :showpopup="showpopup"
+        :key="showpopup"
+        @closepopup="changeShowpopup"
+      ></simple-pop-up>
     </div>
 
     <script>
@@ -23,21 +28,14 @@
           popupConfig: {
             title: 'Title',
             text: 'How are you?',
-            closeOnClickBg: false,
-            header: true,
-            bodyTextCenter: true,
-            styles: {
-              modalClose: {
-                color: 'red',
-              },
-              modalDialog: {
-                width: '500px',
-                margin: '10px auto',
-              },
-            },
           },
           showpopup: true,
         }),
+        methods: {
+          changeShowpopup() {
+            this.showpopup = false
+          },
+        },
       })
     </script>
   </body>
