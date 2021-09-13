@@ -19,21 +19,11 @@ Popup components for vue.js
 
 Здесь componentName будет сответсвовать названию подключаемого js файла
 'alias' — вы можете передать любое название пример:
-`
+`<simple-pop-up :config="popupConfig" :showpopup="showpopup" :key="showpopup"></simple-pop-up>`
 
-<div id="app">
-  <simple-pop-up :config="popupConfig" :showpopup="showpopup" :key="showpopup"></simple-pop-up>
-</div>
-
-`
-
-`
-
-<script>
+```
   Vue.component('simple-pop-up', simplePopUp)
   const app = new Vue({...})
-</script>
-
-`
+```
 
 _(С полным примером можно ознакомится в файле index(for example).html)_
