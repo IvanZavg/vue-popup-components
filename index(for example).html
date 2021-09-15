@@ -7,6 +7,14 @@
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="vue-popup-components/simplePopUpMessage.js"></script>
+    <style>
+      .redtext {
+        color: red;
+      }
+      .bluetext {
+        color: blue;
+      }
+    </style>
   </head>
   <body>
     s
@@ -26,16 +34,18 @@
         el: '#app',
         data: () => ({
           popupConfig: {
-            title: 'Title',
+            title: '',
             text: 'How are you?',
             closeOnClickBg: true,
-            header: true,
+            header: false,
             bodyTextCenter: true,
             changeStyleMode: 'def',
             styles: {
-              modalClose: {
-                color: 'red',
-              },
+              modalClose: { color: 'none' },
+            },
+            classes: {
+              modalClose: ['redtext'],
+              modalBody: ['bluetext'],
             },
           },
           showpopup: true,

@@ -3,7 +3,7 @@ const simplePopUpMessage = {
   data: () => ({
     show: false,
     styles: {
-      styleBG: {
+      modalBg: {
         position: 'fixed',
         top: 0,
         right: 0,
@@ -13,11 +13,11 @@ const simplePopUpMessage = {
         zIndex: 1000,
         opacity: 1,
         margin: 0,
-        padding: 0,
+        padding: '10px',
       },
       modalDialog: {
         position: 'relative',
-        width: '60%',
+        width: '50%',
         margin: '10px auto',
       },
       modalContent: {
@@ -63,16 +63,25 @@ const simplePopUpMessage = {
         textDecoration: 'none',
       },
     },
+    classes: {
+      modalBg: [],
+      modalDialog: [],
+      modalContent: [],
+      modalHeader: [],
+      modalBody: [],
+      modalTitle: [],
+      modalClose: [],
+    },
   }),
   props: ['config', 'showpopup'],
-  template: ` <div :style="styles.styleBG" v-if="show" @click.self="closeOnClickBg">
-                <div :style="styles.modalDialog">
-                <div :style="styles.modalContent">
-                  <div :style="styles.modalHeader">
-                    <h4 :style="styles.modalTitle" v-if="config.title">{{config.title}}</h4>
-                    <a :style="styles.modalClose" title="close" @click.prevent="closePopUp">×</a>
+  template: ` <div :style="styles.modalBg" :class="classes.modalBg" v-if="show" @click.self="closeOnClickBg">
+                <div :style="styles.modalDialog" :class="classes.modalDialog">
+                <div :style="styles.modalContent" :class="classes.modalContent">
+                  <div :style="styles.modalHeader" :class="classes.modalHeader">
+                    <h4 :style="styles.modalTitle" :class="classes.modalTitle" v-if="config.title">{{config.title}}</h4>
+                    <a :style="styles.modalClose" :class="classes.modalClose" title="close" @click.prevent="closePopUp">×</a>
                   </div>
-                  <div :style="styles.modalBody">
+                  <div :style="styles.modalBody" :class="classes.modalBody">
                     <p>{{config.text}}</p>
                   </div>
                 </div>
@@ -101,6 +110,23 @@ const simplePopUpMessage = {
         )
       }
     },
+    setClasses(config) {
+      let classes = config.classes
+      Object.keys(classes).forEach((key) => {
+        this.classes[key] = classes[key]
+      })
+    },
+    resetStylesWithoutTitle() {
+      this.styles.modalHeader = { padding: '0', borderBottom: '1px solid #eceeef' }
+      this.styles.modalClose['margin'] = '15px'
+      this.styles.modalBody['marginBottom'] = '15px'
+    },
+    resetStylesWithoutHeader() {
+      this.styles.modalHeader.borderBottom = 'none'
+    },
+    setMainTextCenter() {
+      this.styles.modalBody.textAlign = 'center'
+    },
     closePopUp() {
       this.show = false
       this.$emit('closepopup')
@@ -118,23 +144,23 @@ const simplePopUpMessage = {
     }
 
     if (!this.config.title) {
-      this.styles.modalHeader = {
-        padding: '5px 15px 0px 0px',
-        borderBottom: '1px solid rgba(0,0,0,.2)',
-      }
-      this.styles.modalBody = { ...this.styles.modalBody, marginTop: '-15px' }
+      this.resetStylesWithoutTitle()
     }
 
     if (this.config.header === false) {
-      this.styles.modalHeader.borderBottom = 'none'
+      this.resetStylesWithoutHeader()
     }
 
     if (this.config.bodyTextCenter === true) {
-      this.styles.modalBody.textAlign = 'center'
+      this.setMainTextCenter()
     }
 
     if (this.config.styles) {
       this.setStyles(this.config)
+    }
+
+    if (this.config.classes) {
+      this.setClasses(this.config)
     }
   },
 }
