@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    <script src="vue-popup-components/simplePopUp.js"></script>
+    <script src="vue-popup-components/simplePopUpMessage.js"></script>
   </head>
   <body>
     s
@@ -20,7 +20,7 @@
     </div>
 
     <script>
-      Vue.component('simple-pop-up', simplePopUp)
+      Vue.component('simple-pop-up', simplePopUpMessage)
 
       const app = new Vue({
         el: '#app',
@@ -28,6 +28,15 @@
           popupConfig: {
             title: 'Title',
             text: 'How are you?',
+            closeOnClickBg: true,
+            header: true,
+            bodyTextCenter: true,
+            changeStyleMode: 'def',
+            styles: {
+              modalClose: {
+                color: 'red',
+              },
+            },
           },
           showpopup: true,
         }),
