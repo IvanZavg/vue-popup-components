@@ -8,8 +8,25 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="vue-popup-components/simplePopUpMessage.js"></script>
     <style>
+      .btn {
+        cursor: pointer;
+        border: none;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      }
+      .btn:hover {
+        box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+      }
+      .light-green-btn {
+        background-color: rgb(163, 248, 146);
+      }
       .redtext {
         color: red;
+      }
+      .bigtext {
+        font-size: 50px;
       }
       .bluetext {
         color: blue;
@@ -17,26 +34,29 @@
     </style>
   </head>
   <body>
-    s
-    <div id="app">
-      <simple-pop-up
+    <div id="simple-pop-up-message-container">
+      <button class="btn light-green-btn" @click="showSimplePopupMessage">
+        simple-pop-up-message
+      </button>
+      <simple-popup-message
         :config="popupConfig"
         :showpopup="showpopup"
         :key="showpopup"
         @closepopup="changeShowpopup"
-      ></simple-pop-up>
+      ></simple-popup-message>
     </div>
 
     <script>
-      Vue.component('simple-pop-up', simplePopUpMessage)
+      Vue.component('simple-popup-message', simplePopUpMessage)
 
-      const app = new Vue({
-        el: '#app',
+      //Exemple with 'simple-popup-message'
+      const app1 = new Vue({
+        el: '#simple-pop-up-message-container',
         data: () => ({
           popupConfig: {
             title: '',
             text: 'How are you?',
-            closeOnClickBg: true,
+            closeOnClickBg: false,
             header: false,
             bodyTextCenter: true,
             changeStyleMode: 'def',
@@ -45,17 +65,21 @@
             },
             classes: {
               modalClose: ['redtext'],
-              modalBody: ['bluetext'],
+              modalBody: ['bluetext', 'bigtext'],
             },
           },
-          showpopup: true,
+          showpopup: false,
         }),
         methods: {
           changeShowpopup() {
             this.showpopup = false
           },
+          showSimplePopupMessage() {
+            this.showpopup = true
+          },
         },
       })
+      //-------------------------------
     </script>
   </body>
 </html>
