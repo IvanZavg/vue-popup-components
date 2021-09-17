@@ -1,6 +1,8 @@
 const simplePopUpMessage = {
   name: 'simple-pop-up',
   data: () => ({
+    title: '',
+    text: '',
     show: false,
     styles: {
       modalBg: {
@@ -73,16 +75,25 @@ const simplePopUpMessage = {
       modalClose: [],
     },
   }),
-  props: ['config', 'showpopup'],
-  template: ` <div :style="styles.modalBg" :class="classes.modalBg" v-if="show" @click.self="closeOnClickBg">
+  props: {
+    config: {
+      type: Object,
+      required: true,
+    },
+    showpopup: {
+      type: Boolean,
+      required: true,
+    },
+  },
+  template: ` <div :style="styles.modalBg" :class="classes.modalBg" v-show="show" @click.self="closeOnClickBg">
                 <div :style="styles.modalDialog" :class="classes.modalDialog">
                 <div :style="styles.modalContent" :class="classes.modalContent">
                   <div :style="styles.modalHeader" :class="classes.modalHeader">
-                    <h4 :style="styles.modalTitle" :class="classes.modalTitle" v-if="config.title">{{config.title}}</h4>
+                    <h4 :style="styles.modalTitle" :class="classes.modalTitle" v-if="title">{{title}}</h4>
                     <a :style="styles.modalClose" :class="classes.modalClose" title="close" @click.prevent="closePopUp">×</a>
                   </div>
                   <div :style="styles.modalBody" :class="classes.modalBody">
-                    <p>{{config.text}}</p>
+                    <p>{{text}}</p>
                   </div>
                 </div>
                 </div>               
@@ -137,30 +148,36 @@ const simplePopUpMessage = {
         this.$emit('closepopup')
       }
     },
+    setConfig(config) {
+      this.title = config.title || null
+      this.text = config.text || ''
+
+      if (!config.title) {
+        this.resetStylesWithoutTitle()
+      }
+
+      if (config.header === false) {
+        this.resetStylesWithoutHeader()
+      }
+
+      if (config.bodyTextCenter === true) {
+        this.setMainTextCenter()
+      }
+
+      if (config.styles) {
+        this.setStyles(config)
+      }
+
+      if (config.classes) {
+        this.setClasses(config)
+      }
+    },
   },
   mounted() {
     if (this.showpopup) {
       this.show = this.showpopup
     }
 
-    if (!this.config.title) {
-      this.resetStylesWithoutTitle()
-    }
-
-    if (this.config.header === false) {
-      this.resetStylesWithoutHeader()
-    }
-
-    if (this.config.bodyTextCenter === true) {
-      this.setMainTextCenter()
-    }
-
-    if (this.config.styles) {
-      this.setStyles(this.config)
-    }
-
-    if (this.config.classes) {
-      this.setClasses(this.config)
-    }
+    this.setConfig(this.config)
   },
 }
